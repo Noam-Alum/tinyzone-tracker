@@ -1,0 +1,17 @@
+
+.header h1 {
+  margin-bottom: 10px;
+}
+
+.updated {
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+.search {
+  margin: 20px 0;
+  padding: 10px;
+  width: 300px;
+  border-radius: 8px;
+  border: none;
+}

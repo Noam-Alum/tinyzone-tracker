@@ -1,0 +1,7 @@
+{
+  "homepage": "https://noam-alum.github.io/tinyzone-tracker",
+  "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  }
+}

@@ -1,0 +1,33 @@
+.card {
+  background: #111827;
+  border-radius: 14px;
+  padding: 20px;
+  text-decoration: none;
+  color: white;
+  position: relative;
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  background: #1f2937;
+}
+
+.badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #22c55e;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: #22c55e;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
