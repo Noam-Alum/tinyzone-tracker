@@ -5,6 +5,7 @@ const path = require("path");
 
 const TARGET = "https://www.whoxy.com/keyword/tinyzone";
 const OUTPUT_FILE = path.join(__dirname, "../public/data.json");
+const BLACKLIST_FILE = path.join(__dirname, "../blacklist.txt");
 
 const colors = {
   reset: "\x1b[0m",
@@ -16,6 +17,11 @@ const colors = {
   dim: "\x1b[2m"
 };
 
+// Load blacklist
+const blacklist = fs.existsSync(BLACKLIST_FILE) 
+  ? fs.readFileSync(BLACKLIST_FILE, "utf-8").split("\n").map(d => d.trim().toLowerCase()).filter(d => d.length > 0)
+  : [];
+
 async function fetchDomains() {
   console.log(`${colors.blue}[INFO] Fetching domain list...${colors.reset}`);
   try {
@@ -26,7 +32,11 @@ async function fetchDomains() {
     const domains = [];
     $("a[href*='tinyzone']").each((_, el) => {
       const d = $(el).text().trim().toLowerCase();
-      if (d.includes(".") && !d.includes("/") && d.length > 3) domains.push(d);
+      if (d.includes(".") && !d.includes("/") && d.length > 3) {
+        if (!blacklist.includes(d)) {
+          domains.push(d);
+        }
+      }
     });
     return [...new Set(domains)];
   } catch (error) { return []; }
@@ -37,6 +47,11 @@ async function checkDomain(domain, visited = []) {
   const indent = "  ".repeat(visited.length);
   const pathString = visited.length > 0 ? `${visited.join(" -> ")} -> ${domainClean}` : domainClean;
   
+  if (blacklist.includes(domainClean)) {
+    // console.log(`${indent}${colors.dim}[BLACKLIST] Skipping ${domainClean}${colors.reset}`);
+    return null;
+  }
+
   if (visited.includes(domainClean) || visited.length >= 5) return null;
   const newVisited = [...visited, domainClean];
 
@@ -52,6 +67,7 @@ async function checkDomain(domain, visited = []) {
       const finalHostname = new URL(finalUrl).hostname.replace("www.", "").toLowerCase();
 
       if (finalHostname !== domainClean && finalHostname.includes("tinyzone")) {
+        if (blacklist.includes(finalHostname)) return null;
         console.log(`${indent}${colors.yellow}[REDIRECT] ${domainClean} -> ${finalHostname}${colors.reset}`);
         return await checkDomain(finalHostname, newVisited);
       }
@@ -79,17 +95,18 @@ async function checkDomain(domain, visited = []) {
             const btnUrl = href.startsWith("//") ? `https:${href}` : href.startsWith("/") ? `${protocol}://${domainClean}${href}` : href;
             const btnHostname = new URL(btnUrl).hostname.replace("www.", "").toLowerCase();
             
-            // Criteria for a Gateway Link:
-            // - Anchor text matches gateway keywords
-            // - OR Anchor text contains "TinyZone" but leads to a different domain
-            const isExternal = btnHostname !== domainClean && btnHostname.length > 3;
-            const isTinyZoneText = text.toLowerCase().includes("tinyzone");
-            const isGatewayText = gatewayRegex.test(text);
-            const isNearSearch = $(el).closest("form").length > 0 || $(el).prev().is("form");
+            if (btnHostname !== domainClean && btnHostname.length > 3) {
+              if (blacklist.includes(btnHostname)) return;
+              
+              const isExternal = btnHostname !== domainClean;
+              const isTinyZoneText = text.toLowerCase().includes("tinyzone");
+              const isGatewayText = gatewayRegex.test(text);
+              const isNearSearch = $(el).closest("form").length > 0 || $(el).prev().is("form");
 
-            if (isExternal && (isTinyZoneText || isGatewayText || isNearSearch)) {
-              if (!["facebook.com", "twitter.com", "x.com", "google.com", "archive.org"].some(h => btnHostname.includes(h))) {
-                potentialLinks.add(btnHostname);
+              if (isExternal && (isTinyZoneText || isGatewayText || isNearSearch)) {
+                if (!["facebook.com", "twitter.com", "x.com", "google.com", "archive.org"].some(h => btnHostname.includes(h))) {
+                  potentialLinks.add(btnHostname);
+                }
               }
             }
           } catch (e) {}
