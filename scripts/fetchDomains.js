@@ -132,10 +132,26 @@ async function checkDomain(domain, visited = []) {
       // B. No buttons or verified as a real portal? 
       if (isFunctionalSite && isNotBadSite && title.toLowerCase().includes("tinyzone")) {
         console.log(`${indent}${colors.green}[ACTIVE SITE] Verified destination: ${finalHostname} (Path: ${pathString})${colors.reset}`);
+        
+        // --- Categorization Logic ---
+        const exactTitle = "TinyZone - Watch Free Movies online";
+        const hasNavMenu = $("ul.nav.header_menu-list").length > 0;
+        const navLinks = $("ul.nav.header_menu-list a");
+        
+        let isOriginal = false;
+        if (title === exactTitle && hasNavMenu) {
+            // Check for specific expected links in original structure
+            const linksText = navLinks.map((i, el) => $(el).text().trim().toLowerCase()).get();
+            if (linksText.includes("home") && linksText.includes("movies") && linksText.includes("tv shows")) {
+                isOriginal = true;
+            }
+        }
+
         return {
           domain: finalHostname,
           url: finalUrl,
           title: title || finalHostname,
+          category: isOriginal ? "Original" : "Replica",
           description: ($('meta[name="description"]').attr("content") || "").substring(0, 150),
           lastChecked: new Date().toISOString()
         };

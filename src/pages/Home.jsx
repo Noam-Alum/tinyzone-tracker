@@ -10,18 +10,39 @@ export default function Home() {
   const { domains, updated, loading, error } = useDomains();
   const [search, setSearch] = useState("");
 
-  const filtered = useMemo(() => {
-    return domains.filter(d =>
+  const sortedDomains = useMemo(() => {
+    const filtered = domains.filter(d =>
       d.domain.toLowerCase().includes(search.toLowerCase()) ||
       (d.title && d.title.toLowerCase().includes(search.toLowerCase()))
     );
+
+    // Sort: Original first, then Replica
+    return filtered.sort((a, b) => {
+      if (a.category === "Original" && b.category !== "Original") return -1;
+      if (a.category !== "Original" && b.category === "Original") return 1;
+      return 0;
+    });
   }, [domains, search]);
+
+  const handleQuickWatch = () => {
+    const originals = domains.filter(d => d.category === "Original");
+    const target = originals.length > 0 ? originals[0] : domains[0];
+    if (target) window.open(target.url, "_blank");
+  };
 
   return (
     <div className="app">
       <Header updated={updated} error={error} />
 
       <SearchBar value={search} onChange={setSearch} />
+
+      {domains.length > 0 && (
+        <div className="quick-actions fade-in">
+          <button className="quick-watch-btn" onClick={handleQuickWatch}>
+            <span className="btn-icon">⚡</span> Quick Watch
+          </button>
+        </div>
+      )}
 
       {loading ? (
         <Loader />
@@ -30,9 +51,9 @@ export default function Home() {
           <h2>Oops! Something went wrong</h2>
           <p>{error}</p>
         </div>
-      ) : filtered.length > 0 ? (
+      ) : sortedDomains.length > 0 ? (
         <div className="grid">
-          {filtered.map((d) => (
+          {sortedDomains.map((d) => (
             <DomainCard key={d.domain} {...d} />
           ))}
         </div>
