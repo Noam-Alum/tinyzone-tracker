@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/tinyzone-tracker/static/css/main.32634faa.css",
+    "main.js": "/tinyzone-tracker/static/js/main.9b03a83e.js",
+    "index.html": "/tinyzone-tracker/index.html",
+    "main.32634faa.css.map": "/tinyzone-tracker/static/css/main.32634faa.css.map",
+    "main.9b03a83e.js.map": "/tinyzone-tracker/static/js/main.9b03a83e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.32634faa.css",
+    "static/js/main.9b03a83e.js"
+  ]
+}
