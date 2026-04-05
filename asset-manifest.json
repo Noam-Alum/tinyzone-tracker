@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/tinyzone-tracker/static/css/main.c9e33d57.css",
-    "main.js": "/tinyzone-tracker/static/js/main.ea905760.js",
+    "main.css": "/tinyzone-tracker/static/css/main.5ae780b5.css",
+    "main.js": "/tinyzone-tracker/static/js/main.fa54d925.js",
     "index.html": "/tinyzone-tracker/index.html",
-    "main.c9e33d57.css.map": "/tinyzone-tracker/static/css/main.c9e33d57.css.map",
-    "main.ea905760.js.map": "/tinyzone-tracker/static/js/main.ea905760.js.map"
+    "main.5ae780b5.css.map": "/tinyzone-tracker/static/css/main.5ae780b5.css.map",
+    "main.fa54d925.js.map": "/tinyzone-tracker/static/js/main.fa54d925.js.map"
   },
   "entrypoints": [
-    "static/css/main.c9e33d57.css",
-    "static/js/main.ea905760.js"
+    "static/css/main.5ae780b5.css",
+    "static/js/main.fa54d925.js"
   ]
 }
