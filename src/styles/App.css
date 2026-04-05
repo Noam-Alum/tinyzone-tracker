@@ -77,11 +77,69 @@ body {
 
 .footer {
   margin-top: 4rem;
-  padding: 2rem 0;
+  padding: 4rem 1.5rem 2rem;
   border-top: 1px solid var(--border);
   text-align: center;
   color: var(--text-dim);
   font-size: 0.875rem;
+}
+
+.footer-support {
+  max-width: 500px;
+  margin: 0 auto 3rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+}
+
+.footer-support h3 {
+  color: var(--text);
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+
+.footer-support p {
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.footer-support-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  background: #ea4c89;
+  color: white;
+  text-decoration: none;
+  border-radius: 12px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(234, 76, 137, 0.3);
+}
+
+.footer-support-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(234, 76, 137, 0.4);
+  filter: brightness(1.1);
+}
+
+.footer-links {
+  margin-bottom: 1.5rem;
+}
+
+.footer-link {
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+  color: #60a5fa;
+}
+
+.copyright {
+  opacity: 0.7;
 }
 
 @media (max-width: 768px) {
@@ -91,6 +149,18 @@ body {
   
   .grid {
     grid-template-columns: 1fr;
+  }
+
+  .header .nav-actions {
+    position: static;
+    justify-content: center;
+    margin-bottom: 2rem;
+    order: -1;
+  }
+
+  .header {
+    display: flex;
+    flex-direction: column;
   }
 }
 

@@ -65,7 +65,28 @@ export default function Home() {
       )}
 
       <footer className="footer fade-in">
-        <p>© {new Date().getFullYear()} Tinyzone Tracker. Not affiliated with Tinyzone.</p>
+        <div className="footer-support">
+          <h3>Support this Project</h3>
+          <p>
+            I maintain this tracker to help the community find reliable streaming portals. 
+            If you find it useful, consider becoming a sponsor! 
+            Your support helps keep this project alive and updated.
+          </p>
+          <a 
+            href="https://github.com/sponsors/Noam-Alum" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="footer-support-btn"
+          >
+            <span className="btn-icon">❤️</span> Become a Sponsor
+          </a>
+        </div>
+        <div className="footer-links">
+          <a href="https://github.com/Noam-Alum/tinyzone-tracker" target="_blank" rel="noopener noreferrer" className="footer-link">
+            GitHub Repository
+          </a>
+        </div>
+        <p className="copyright">© {new Date().getFullYear()} Tinyzone Tracker. Not affiliated with Tinyzone.</p>
       </footer>
     </div>
   );

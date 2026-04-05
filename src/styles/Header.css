@@ -2,6 +2,64 @@
   text-align: center;
   margin-bottom: 3rem;
   padding-top: 1rem;
+  position: relative;
+}
+
+.nav-actions {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-dim);
+}
+
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--text-dim);
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+.sponsor-btn {
+  background: rgba(234, 76, 137, 0.1);
+  border-color: rgba(234, 76, 137, 0.2);
+  color: #ea4c89;
+}
+
+.sponsor-btn:hover {
+  background: rgba(234, 76, 137, 0.15);
+  border-color: #ea4c89;
+  color: #ea4c89;
+}
+
+.github-btn {
+  padding: 0.5rem;
+}
+
+.logo-link {
+  text-decoration: none;
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.logo-link:hover {
+  transform: scale(1.02);
 }
 
 .logo {
