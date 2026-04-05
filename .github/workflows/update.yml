@@ -41,8 +41,8 @@ jobs:
       - name: Update README timestamp
         working-directory: main
         run: |
-          DATE=$(date -u)
-          sed -i "s/Last Updated: .*/Last Updated: $DATE/" README.md
+          DATE=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          sed -i "s|^Last Updated: .*|Last Updated: $DATE|" README.md
 
       # --- GH-PAGES BRANCH ---
       - name: Checkout gh-pages
