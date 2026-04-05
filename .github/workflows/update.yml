@@ -28,7 +28,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20
-          # removed cache because no lockfile
 
       - name: Install dependencies
         working-directory: main
@@ -42,7 +41,7 @@ jobs:
         working-directory: main
         run: |
           DATE=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
-          sed -i "s|^Last Updated: .*|Last Updated: $DATE|" README.md
+          sed -i "s|Last Updated: .*|Last Updated: $DATE  |" README.md
 
       # --- GH-PAGES BRANCH ---
       - name: Checkout gh-pages
@@ -51,10 +50,9 @@ jobs:
           ref: gh-pages
           path: gh-pages
 
-      - name: Copy JSON to gh-pages
+      - name: Copy JSON to gh-pages root
         run: |
-          mkdir -p gh-pages/public
-          cp main/public/data.json gh-pages/public/data.json
+          cp main/public/data.json gh-pages/data.json
 
       # --- COMMIT gh-pages ---
       - name: Commit JSON to gh-pages
@@ -62,7 +60,7 @@ jobs:
         with:
           repository: gh-pages
           commit_message: "chore: update domain list"
-          file_pattern: public/data.json
+          file_pattern: data.json
           branch: gh-pages
           skip_dirty_check: false
 
