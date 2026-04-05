@@ -2,7 +2,7 @@ name: Update Domains
 
 on:
   schedule:
-    - cron: "*/30 * * * *"   # every 30 minutes
+    - cron: "*/30 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -17,30 +17,59 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      # --- MAIN BRANCH ---
+      - name: Checkout main
         uses: actions/checkout@v3
+        with:
+          ref: main
+          path: main
 
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 20
-          cache: 'npm'
+          cache: npm
 
       - name: Install dependencies
+        working-directory: main
         run: npm install
 
       - name: Fetch active domains
+        working-directory: main
         run: npm run fetch
 
       - name: Update README timestamp
+        working-directory: main
         run: |
           DATE=$(date -u)
           sed -i "s/Last Updated: .*/Last Updated: $DATE/" README.md
 
-      - name: Commit files
+      # --- GH-PAGES BRANCH ---
+      - name: Checkout gh-pages
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Copy JSON to gh-pages
+        run: |
+          mkdir -p gh-pages/public
+          cp main/public/data.json gh-pages/public/data.json
+
+      # --- COMMIT gh-pages ---
+      - name: Commit JSON to gh-pages
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: auto-update domain list and README timestamp"
-          file_pattern: public/data.json README.md
-          pull: true
-          push_options: --force-with-lease
+          repository: gh-pages
+          commit_message: "chore: update domain list"
+          file_pattern: public/data.json
+          branch: gh-pages
+
+      # --- COMMIT main ---
+      - name: Commit README to main
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          repository: main
+          commit_message: "chore: update README timestamp"
+          file_pattern: README.md
+          branch: main
