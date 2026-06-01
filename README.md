@@ -5,7 +5,7 @@ A high-performance, real-time status tracker for active TinyZone mirror domains.
 ![TinyZone Tracker](public/logo.png)
 
 ## Website Status
-Last Updated: 2026-05-31 22:51:42 UTC  
+Last Updated: 2026-06-01 00:00:10 UTC  
 *Live at: [https://noam-alum.github.io/tinyzone-tracker/](https://noam-alum.github.io/tinyzone-tracker/)*
 
 ---
